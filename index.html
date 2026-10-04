@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS2 Chat Translator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>CS2 <span>Chat Translator</span></h1>
+    <div class="controls">
+      <button id="pickBtn" class="btn primary">Wybierz console.log</button>
+      <button id="demoBtn" class="btn">Tryb demo</button>
+      <label class="lang">
+        Tłumacz na
+        <select id="targetLang">
+          <option value="pl" selected>polski</option>
+          <option value="en">angielski</option>
+          <option value="de">niemiecki</option>
+        </select>
+      </label>
+    </div>
+    <p id="status" class="status">Nie podłączono pliku. Uruchom CS2 z opcją <code>-condebug</code> i wybierz <code>game/csgo/console.log</code>.</p>
+  </header>
+
+  <main class="stage">
+    <section class="panel">
+      <h2>Czat z gry</h2>
+      <div class="chat" id="chatOriginal" aria-live="polite"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Tłumaczenie</h2>
+      <div class="chat" id="chatTranslated" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    Plik czytany jest tylko lokalnie w Twojej przeglądarce. Wymaga Chrome lub Edge.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
