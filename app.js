@@ -207,13 +207,20 @@ function stopDemo() {
   demoTimer = null;
 }
 
-// ---------- Start ----------
-for (const box of [chatOriginal, chatTranslated]) {
-  const e = document.createElement("div");
-  e.className = "empty";
-  e.textContent = "Brak wiadomości";
-  box.append(e);
+// ---------- Czyszczenie ----------
+function clearChat() {
+  for (const box of [chatOriginal, chatTranslated]) {
+    box.replaceChildren();
+    const e = document.createElement("div");
+    e.className = "empty";
+    e.textContent = "Brak wiadomości";
+    box.append(e);
+  }
 }
 
+// ---------- Start ----------
+clearChat();
+
 $("pickBtn").addEventListener("click", pickFile);
+$("clearBtn").addEventListener("click", clearChat);
 $("demoBtn").addEventListener("click", () => (demoTimer ? (stopDemo(), setStatus("Demo zatrzymane.")) : startDemo()));
