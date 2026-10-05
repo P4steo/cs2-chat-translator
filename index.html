@@ -5,36 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CS2 Chat Translator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button id="helpBtn" class="help-btn" aria-label="Jak używać" aria-controls="helpDrawer" aria-expanded="false">?</button>
+
   <header class="top">
-    <h1>CS2 <span>Chat Translator</span></h1>
+    <p class="eyebrow">Counter-Strike 2</p>
+    <h1>Chat <span>Translator</span></h1>
+    <p class="lead">Tłumaczy czat z gry na żywo, prosto z pliku <code>console.log</code>.</p>
+
     <div class="controls">
-      <button id="pickBtn" class="btn primary">Wybierz console.log</button>
-      <button id="demoBtn" class="btn">Tryb demo</button>
-      <button id="clearBtn" class="btn">Wyczyść czat</button>
-      <label class="lang">
-        Tłumacz na
-        <select id="targetLang">
-          <option value="pl" selected>polski</option>
-          <option value="en">angielski</option>
-          <option value="de">niemiecki</option>
-        </select>
-      </label>
+      <button id="pickBtn" class="btn-import">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Importuj log
+      </button>
+
+      <div class="secondary">
+        <label class="lang">
+          Tłumacz na
+          <select id="targetLang">
+            <option value="pl" selected>polski</option>
+            <option value="en">angielski</option>
+            <option value="de">niemiecki</option>
+          </select>
+        </label>
+        <button id="clearBtn" class="btn-ghost">Wyczyść czat</button>
+      </div>
     </div>
-    <p id="status" class="status">Nie podłączono pliku. Uruchom CS2 z opcją <code>-condebug</code> i wybierz <code>game/csgo/console.log</code>.</p>
+
+    <p id="status" class="status">Nie podłączono pliku. Nie wiesz skąd go wziąć? Kliknij <button class="link" data-open-help>znak zapytania</button>.</p>
   </header>
 
   <main class="stage">
     <section class="panel">
-      <h2>Czat z gry</h2>
+      <div class="panel-head">
+        <h2>Czat z gry</h2>
+        <span class="badge" id="badgeLeft">Przykład</span>
+      </div>
       <div class="chat" id="chatOriginal" aria-live="polite"></div>
     </section>
 
+    <div class="connector" aria-hidden="true">
+      <div class="connector-dot" id="connector">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
     <section class="panel">
-      <h2>Tłumaczenie</h2>
+      <div class="panel-head">
+        <h2>Tłumaczenie</h2>
+        <span class="badge" id="badgeRight">Przykład</span>
+      </div>
       <div class="chat" id="chatTranslated" aria-live="polite"></div>
     </section>
   </main>
@@ -42,6 +65,65 @@
   <footer class="foot">
     Plik czytany jest tylko lokalnie w Twojej przeglądarce. Wymaga Chrome lub Edge.
   </footer>
+
+  <!-- Panel pomocy -->
+  <div class="scrim" id="scrim" hidden></div>
+  <aside class="drawer" id="helpDrawer" aria-hidden="true" aria-labelledby="helpTitle">
+    <div class="drawer-head">
+      <h2 id="helpTitle">Jak to uruchomić?</h2>
+      <button class="drawer-close" id="helpClose" aria-label="Zamknij">×</button>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <h3>Włącz zapisywanie logu</h3>
+        <p>W Steamie kliknij prawym na <b>Counter-Strike 2</b> → <b>Właściwości</b> → <b>Ogólne</b>. W polu <b>Opcje uruchamiania</b> dopisz:</p>
+        <div class="copy-row">
+          <code>-condebug</code>
+          <button class="copy" data-copy="-condebug">Kopiuj</button>
+        </div>
+
+        <figure class="steam-shot" aria-label="Przykład pola opcji uruchamiania ze wpisanym -condebug">
+          <div class="shot-inner">
+            <div class="shot-check">
+              <span class="box">✓</span>
+              Keep game saves in the Steam Cloud for Counter-Strike 2
+            </div>
+            <div class="shot-title">LAUNCH OPTIONS</div>
+            <div class="shot-desc">Advanced users may choose to enter modifications to their launch options.</div>
+            <div class="shot-input"><span class="typed">-condebug</span><span class="caret"></span></div>
+          </div>
+        </figure>
+        <p class="hint">Masz już inne opcje? Dopisz <code>-condebug</code> na końcu, po spacji.</p>
+      </li>
+
+      <li>
+        <h3>Uruchom grę</h3>
+        <p>Od teraz gra zapisuje konsolę do pliku <code>console.log</code>:</p>
+        <div class="copy-row path">
+          <code>...\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\console.log</code>
+          <button class="copy" data-copy="Counter-Strike Global Offensive\game\csgo\console.log">Kopiuj</button>
+        </div>
+        <p class="hint">Najszybciej trafisz tam przez Steam: <b>Właściwości</b> → <b>Zainstalowane pliki</b> → <b>Przeglądaj</b>, a potem folder <code>game\csgo</code>. Plik pojawia się dopiero po pierwszym uruchomieniu gry z <code>-condebug</code>.</p>
+      </li>
+
+      <li>
+        <h3>Zaimportuj log</h3>
+        <p>Kliknij <b>Importuj log</b> i wskaż <code>console.log</code>. Nowe wiadomości z czatu będą pojawiać się na żywo po lewej, a tłumaczenie po prawej.</p>
+      </li>
+    </ol>
+
+    <div class="notes">
+      <p><b>Dobrze wiedzieć</b></p>
+      <ul>
+        <li>Działa w Chrome i Edge (Firefox nie pozwala stronom śledzić pliku).</li>
+        <li>Strona nie ingeruje w grę, tylko czyta plik tekstowy, który gra sama zapisuje.</li>
+        <li>Gra czyści log przy każdym uruchomieniu; strona to wykrywa.</li>
+        <li>Wiadomości już w wybranym języku i growy slang (gg, wp, ez…) zostają bez tłumaczenia.</li>
+        <li>Po odświeżeniu strony plik trzeba wybrać ponownie.</li>
+      </ul>
+    </div>
+  </aside>
 
   <script src="app.js"></script>
 </body>

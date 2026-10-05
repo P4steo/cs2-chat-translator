@@ -10,7 +10,8 @@ Prosta strona, która na bieżąco śledzi czat z Counter-Strike 2 i pokazuje t�
    `...\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\console.log`.
 4. Graj. Nowe wiadomości z czatu pojawiają się w lewym oknie, tłumaczenie w prawym.
 
-Przycisk **Tryb demo** pokazuje przykładowe wiadomości bez uruchamiania gry.
+Na wejściu strona pokazuje animowany przykład działania. Instrukcja krok po kroku jest pod przyciskiem **?** w prawym górnym rogu.
+Wiadomości już w wybranym języku i growy slang (gg, wp, ez…) zostają bez tłumaczenia.
 
 ## Jak to działa
 
